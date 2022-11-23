@@ -82,11 +82,31 @@ public class ExpanseOutputService {
     }
 
     private void displayDayWithHighestExpanses(){
-        System.out.println("Display Day With Highest Expanses");
+        int highestExpanses = 0;
+
+        for (int[] days : expanses) {
+            for (int expanse : days) {
+                if (expanse > highestExpanses) {
+                    highestExpanses = expanse;
+                }
+            }
+        }
+
+        System.out.printf("The day with the highest expanses is: %d", highestExpanses);
     }
 
     private void displayDayWithLowestExpanses(){
-        System.out.println("Display Day With Lowest Expanses");
+        int lowestExpanse = 0;
+
+        for (int[] days : expanses) {
+            for (int expanse : days) {
+                if (expanse > lowestExpanse) {
+                    lowestExpanse = expanse;
+                }
+            }
+        }
+
+        System.out.printf("The day with the lowest expanses is: %d", lowestExpanse);
     }
 
     private void exit(){
