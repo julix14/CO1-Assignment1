@@ -10,7 +10,9 @@ public class ExpanseOutputService {
     final List<String> menuItems;
     final int[][] expanses;
 
-    public ExpanseOutputService(int[][] expanses) {
+    final int budget;
+
+    public ExpanseOutputService(int[][] expanses, int budget) {
         //Build up the menu
         menuItems = new ArrayList<>();
         Collections.addAll(menuItems,
@@ -24,6 +26,7 @@ public class ExpanseOutputService {
                 "Exit");
         //Store the expanses
         this.expanses = expanses;
+        this.budget = budget;
     }
 
 
@@ -39,7 +42,17 @@ public class ExpanseOutputService {
     }
 
     private void displayRemainingBudget(){
-        System.out.println("Display Remaining Budget");
+        int totalExpanses = 0;
+
+        for (int[] day: expanses) {
+            for (int expanse: day) {
+                totalExpanses += expanse;
+            }
+        }
+
+        System.out.printf("The remaining budget is: %d", budget - totalExpanses);
+        System.out.printf("Or to say it in percentage: %d%%", (budget - totalExpanses) * 100 / budget);
+
     }
 
     private void displayExpansesByCategory(){
