@@ -56,7 +56,16 @@ public class ExpanseOutputService {
     }
 
     private void displayExpansesByCategory(){
-        System.out.println("Display Expanses By Category");
+        int[] categoryExpanses = new int[CATEGORIES.length];
+        for( int[] day : expanses) {
+            for (int i = 0; i < day.length; i++) {
+                categoryExpanses[i] += day[i];
+            }
+        }
+
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            System.out.printf("The expanses for %s are: %d", CATEGORIES[i], categoryExpanses[i]);
+        }
     }
 
     private void displayRelativeExpansesByCategory(){
