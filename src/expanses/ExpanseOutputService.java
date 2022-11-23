@@ -69,7 +69,16 @@ public class ExpanseOutputService {
     }
 
     private void displayRelativeExpansesByCategory(){
-        System.out.println("Display Relative Expanses By Category");
+        int[] categoryExpanses = new int[CATEGORIES.length];
+        for( int[] day : expanses) {
+            for (int i = 0; i < day.length; i++) {
+                categoryExpanses[i] += day[i];
+            }
+        }
+
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            System.out.printf("The expanses for %s are: %d%%", CATEGORIES[i], categoryExpanses[i] * 100 / budget);
+        }
     }
 
     private void displayDayWithHighestExpanses(){
