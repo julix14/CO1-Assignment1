@@ -29,26 +29,4 @@ public class ValidationService {
         }while (true);
     }
 
-    public Integer validateInputIsBiggerThan(String message, Integer min) {
-        Integer input;
-        do {
-            input = validateInputIsInt(message);
-            if (input >= min) {
-                return input;
-            } else {
-                System.out.println("Input is to big. It may just be " + min + " or bigger");
-            }
-        }while (true);
-    }
-    public String valdidateInputIsNotEmpty(String message) {
-        String input;
-        do {
-            input = userInputService.getStringFromUserWithMessage(message);
-            if (!input.isEmpty()) {
-                return input;
-            } else {
-                System.out.println("Input is empty");
-            }
-        } while (true);
-    }
 }
