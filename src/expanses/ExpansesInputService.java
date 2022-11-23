@@ -3,7 +3,7 @@ package expanses;
 import validation.ValidationService;
 
 public class ExpansesInputService {
-    private final ValidationService validationService = new ValidationService();
+    final private ValidationService validationService = new ValidationService();
     final private String[] CATEGORIES = {"Food", "Transport", "Shopping", "Other"};
 
     public int[][] getExpanses() {
