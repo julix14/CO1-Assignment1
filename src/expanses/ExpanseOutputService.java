@@ -11,7 +11,7 @@ public class ExpanseOutputService {
     final int[][] expanses;
 
     public ExpanseOutputService(int[][] expanses) {
-
+        //Build up the menu
         menuItems = new ArrayList<>();
         Collections.addAll(menuItems,
                 "Display Daily Expanses",
@@ -22,13 +22,20 @@ public class ExpanseOutputService {
                 "Display the Day with the highest Expenses",
                 "Display the Day with the lowest Expenses",
                 "Exit");
-
+        //Store the expanses
         this.expanses = expanses;
     }
 
 
     private void displayDailyExpanses(){
-        System.out.println("Display Daily Expanses");
+        System.out.println("The sum of the expanses for each day is:");
+        for (int i = 0; i < expanses.length; i++) {
+            int dailyExpanses = 0;
+            for (int j = 0; j < expanses[i].length; j++) {
+                dailyExpanses += expanses[i][j];
+            }
+            System.out.printf("Day %d: %d, ", i + 1, dailyExpanses);
+        }
     }
 
     private void displayRemainingBudget(){
