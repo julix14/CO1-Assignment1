@@ -7,7 +7,7 @@ public class ExpansesInputService {
     final private String[] CATEGORIES = {"Food", "Transport", "Shopping", "Other"};
 
     public int[][] getExpanses() {
-        int days = validationService.validateInputIsInt("Enter number of days");
+        int days = validationService.validateInputIsInt("Please enter the number of days you want to enter expanses for");
         int[][] expanses = new int[days][CATEGORIES.length];
         for (int i = 0; i < days; i++) {
             for (int j = 0; j < CATEGORIES.length; j++) {
@@ -18,7 +18,7 @@ public class ExpansesInputService {
     }
 
     public int getBudget() {
-        return validationService.validateInputIsInt("Enter budget");
+        return validationService.validateInputIsInt("Please enter your budget");
     }
 
 

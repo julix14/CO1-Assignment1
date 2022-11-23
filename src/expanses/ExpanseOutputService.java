@@ -17,7 +17,6 @@ public class ExpanseOutputService {
         menuItems = new ArrayList<>();
         Collections.addAll(menuItems,
                 "Display Daily Expanses",
-                "Display Daily Expanses",
                 "Display Remaining Budget",
                 "Display Expenses by Category",
                 "Display relative Expanses by Category",
@@ -37,7 +36,7 @@ public class ExpanseOutputService {
             for (int j = 0; j < expanses[i].length; j++) {
                 dailyExpanses += expanses[i][j];
             }
-            System.out.printf("Day %d: %d, ", i + 1, dailyExpanses);
+            System.out.printf("Day %d: %d\n", i + 1, dailyExpanses);
         }
     }
 
@@ -50,35 +49,38 @@ public class ExpanseOutputService {
             }
         }
 
-        System.out.printf("The remaining budget is: %d", budget - totalExpanses);
-        System.out.printf("Or to say it in percentage: %d%%", (budget - totalExpanses) * 100 / budget);
+        System.out.printf("The remaining budget is: %d\n", budget - totalExpanses);
+        System.out.printf("Or to say it in percentage: %d%%\n", (budget - totalExpanses) * 100 / budget);
 
     }
 
-    private void displayExpansesByCategory(){
+    private int[][] getExpansesByCategory() {
         int[] categoryExpanses = new int[CATEGORIES.length];
+        int totalExpanses = 0;
         for( int[] day : expanses) {
             for (int i = 0; i < day.length; i++) {
                 categoryExpanses[i] += day[i];
+                totalExpanses += day[i];
             }
         }
+        return new int[][]{categoryExpanses, {totalExpanses}};
+    }
+    private void displayExpansesByCategory(){
+        int[][] expansesByCategory = getExpansesByCategory();
 
-        for (int i = 0; i < CATEGORIES.length; i++) {
-            System.out.printf("The expanses for %s are: %d", CATEGORIES[i], categoryExpanses[i]);
+        for (String category : CATEGORIES) {
+            System.out.printf("The expanses for %s are: %d\n", category, expansesByCategory[0][1]);
         }
+        System.out.printf("The expanses for all categories are: %d%%\n", expansesByCategory[1][0]);
     }
 
     private void displayRelativeExpansesByCategory(){
-        int[] categoryExpanses = new int[CATEGORIES.length];
-        for( int[] day : expanses) {
-            for (int i = 0; i < day.length; i++) {
-                categoryExpanses[i] += day[i];
-            }
-        }
+        int[][] expansesByCategory = getExpansesByCategory();
 
-        for (int i = 0; i < CATEGORIES.length; i++) {
-            System.out.printf("The expanses for %s are: %d%%", CATEGORIES[i], categoryExpanses[i] * 100 / budget);
+        for (String category : CATEGORIES) {
+            System.out.printf("The relative expanses for %s are: %d\n", category, expansesByCategory[0][1]);
         }
+        System.out.printf("The relative expanses for all categories are: %d%%\n", expansesByCategory[1][0] * 100 / budget);
     }
 
     private void displayDayWithHighestExpanses(){
@@ -92,7 +94,7 @@ public class ExpanseOutputService {
             }
         }
 
-        System.out.printf("The day with the highest expanses is: %d", highestExpanses);
+        System.out.printf("The day with the highest expanses is: %d\n", highestExpanses);
     }
 
     private void displayDayWithLowestExpanses(){
@@ -106,20 +108,23 @@ public class ExpanseOutputService {
             }
         }
 
-        System.out.printf("The day with the lowest expanses is: %d", lowestExpanse);
+        System.out.printf("The day with the lowest expanses is: %d \n", lowestExpanse);
     }
 
     private void exit(){
-        System.out.println("Exit");
+        System.out.println("Goodbye!");
     }
 
-    private void selectAction(List<String> menuItems) {
+    public void selectAction() {
         int selectedItem;
         do {
+            //Print the Menu Items
+            System.out.println("\n Menu-Items: \n");
             for (int i = 0; i < menuItems.size(); i++) {
                 System.out.printf("[%d] -> %s\n", i, menuItems.get(i));
             }
-            selectedItem = validationService.validateInputIsInRange("Select a method to run", 0, menuItems.size() - 1);
+            //Get the user input
+            selectedItem = validationService.validateInputIsInRange("Please select one of the options", 0, menuItems.size() - 1);
             switch (selectedItem) {
                 case 0 -> this.displayDailyExpanses();
                 case 1 -> this.displayRemainingBudget();
