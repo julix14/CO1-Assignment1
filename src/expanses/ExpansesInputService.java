@@ -17,6 +17,10 @@ public class ExpansesInputService {
         return expanses;
     }
 
+    public int getBudget() {
+        return validationService.validateInputIsInt("Enter budget");
+    }
+
 
 
 }
