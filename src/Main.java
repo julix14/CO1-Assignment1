@@ -4,7 +4,7 @@ import input.UserInputService;
 
 public class Main {
     public static void main(String[] args) {
-        // Create instances of the  UserInputService and expansesInputService
+        // Create instances of the  UserInputService
         UserInputService userInputService = new UserInputService();
 
 
@@ -12,6 +12,7 @@ public class Main {
         System.out.println("Welcome to the expanses program!");
         String name = userInputService.getStringFromUserWithMessage("What is your name?");
 
+        //Create instances of the ExpansesInputService
         ExpansesInputService expansesInputService = new ExpansesInputService(name);
 
         // Ask the user for the budget and expanses
