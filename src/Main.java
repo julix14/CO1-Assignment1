@@ -6,11 +6,13 @@ public class Main {
     public static void main(String[] args) {
         // Create instances of the  UserInputService and expansesInputService
         UserInputService userInputService = new UserInputService();
-        ExpansesInputService expansesInputService = new ExpansesInputService();
+
 
         //Greet the User and save his/her name
         System.out.println("Welcome to the expanses program!");
         String name = userInputService.getStringFromUserWithMessage("What is your name?");
+
+        ExpansesInputService expansesInputService = new ExpansesInputService(name);
 
         // Ask the user for the budget and expanses
         int budget = expansesInputService.getBudget();
