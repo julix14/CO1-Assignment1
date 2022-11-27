@@ -117,12 +117,12 @@ public class ExpanseOutputService {
     }
 
     private void displayCategoryWithLowestExpanses(){
-        int lowestExpanse = 0;
+        int[][] expansesByCategory = getExpansesByCategory();
+        int lowestExpanse = expansesByCategory[0][0];
         int categoryWithLowestSum = 0;
+
         //Go through each day and each category and check if the expanse is lower than the "so far lowest expanses"
         //If it is, overwrite the lowest expanses variable
-        int[][] expansesByCategory = getExpansesByCategory();
-
         for (int i = 0; i < expansesByCategory[0].length; i++) {
             if(lowestExpanse > expansesByCategory[0][i]){
                 lowestExpanse = expansesByCategory[0][i];
