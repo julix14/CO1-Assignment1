@@ -113,23 +113,24 @@ public class ExpanseOutputService {
             }
         }
 
-        System.out.printf("The highest total expanse was %d on day number %d", highestExpanses, dayWithHighestExpense);
+        System.out.printf("The highest total expanse was %d on day number %d\n", highestExpanses, dayWithHighestExpense);
     }
 
-    private void displayDayWithLowestExpanses(){
+    private void displayCategoryWithLowestExpanses(){
         int lowestExpanse = 0;
-
+        int categoryWithLowestSum = 0;
         //Go through each day and each category and check if the expanse is lower than the "so far lowest expanses"
         //If it is, overwrite the lowest expanses variable
-        for (int[] days : expanses) {
-            for (int expanse : days) {
-                if (expanse > lowestExpanse) {
-                    lowestExpanse = expanse;
-                }
+        int[][] expansesByCategory = getExpansesByCategory();
+
+        for (int i = 0; i < expansesByCategory[0].length; i++) {
+            if(lowestExpanse > expansesByCategory[0][i]){
+                lowestExpanse = expansesByCategory[0][i];
+                categoryWithLowestSum = i;
             }
         }
 
-        System.out.printf("The day with the lowest expanses is: %d \n", lowestExpanse);
+        System.out.printf("The category with the lowest expanses is: %s, with a total expense of %d \n", CATEGORIES[categoryWithLowestSum], lowestExpanse);
     }
 
     private void exit(){
@@ -155,7 +156,7 @@ public class ExpanseOutputService {
                 case 2 -> this.displayExpansesByCategory();
                 case 3 -> this.displayRelativeExpansesByCategory();
                 case 4 -> this.displayDayWithHighestExpanse();
-                case 5 -> this.displayDayWithLowestExpanses();
+                case 5 -> this.displayCategoryWithLowestExpanses();
                 case 6 -> this.exit();
             }
         } while (selectedItem != 6);
