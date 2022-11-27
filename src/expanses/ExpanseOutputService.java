@@ -96,20 +96,24 @@ public class ExpanseOutputService {
         System.out.printf("The relative expanses for all categories are: %d%%\n", expansesByCategory[1][0] * 100 / budget);
     }
 
-    private void displayDayWithHighestExpanses(){
+    private void displayDayWithHighestExpanse(){
         int highestExpanses = 0;
+        int dayWithHighestExpense = 0;
 
-        //Go through each day and each category and check if the expanse is higher than the "so far highest expanses"
-        //If it is, overwrite the highest expanses variable
-        for (int[] days : expanses) {
-            for (int expanse : days) {
-                if (expanse > highestExpanses) {
-                    highestExpanses = expanse;
-                }
+        //Go through each day and check if the expanse per day is higher than the "so far highest expanses"
+        //If it is, overwrite the highestExpanses- and dayWithHighestExpanse-Variable
+        for (int i = 0; i < expanses.length; i++) {
+            int expansePerDay = 0;
+            for (int expanse : expanses[i]) {
+                expansePerDay += expanse;
+            }
+            if (expansePerDay > highestExpanses){
+                highestExpanses = expansePerDay;
+                dayWithHighestExpense = i;
             }
         }
 
-        System.out.printf("The day with the highest expanses is: %d\n", highestExpanses);
+        System.out.printf("The highest total expanse was %d on day number %d", highestExpanses, dayWithHighestExpense);
     }
 
     private void displayDayWithLowestExpanses(){
@@ -150,7 +154,7 @@ public class ExpanseOutputService {
                 case 1 -> this.displayRemainingBudget();
                 case 2 -> this.displayExpansesByCategory();
                 case 3 -> this.displayRelativeExpansesByCategory();
-                case 4 -> this.displayDayWithHighestExpanses();
+                case 4 -> this.displayDayWithHighestExpanse();
                 case 5 -> this.displayDayWithLowestExpanses();
                 case 6 -> this.exit();
             }
