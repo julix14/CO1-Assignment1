@@ -140,11 +140,18 @@ public class ExpanseOutputService {
         System.out.println("Goodbye!");
     }
 
+    private void waitForKeypress(){
+        //Wait for the user to press a key
+        System.out.println("\nPress 'Enter' to continue...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
     public void selectAction() {
         int selectedItem;
         do {
             //Print the Menu Items
-            System.out.println("\n Menu-Items: \n");
+            System.out.println("Menu-Items: \n");
             for (int i = 0; i < menuItems.size(); i++) {
                 System.out.printf("[%d] -> %s\n", i, menuItems.get(i));
             }
@@ -161,6 +168,7 @@ public class ExpanseOutputService {
                 case 5 -> this.displayCategoryWithLowestExpanses();
                 case 6 -> this.exit();
             }
+            waitForKeypress();
         } while (selectedItem != 6);
     }
 
