@@ -76,24 +76,26 @@ public class ExpanseOutputService {
         //return the categoryExpanses array and the total expanses in a 2D array
         return new int[][]{categoryExpanses, {totalExpanses}};
     }
+    final int CATEGORY_EXPANSES_POSITION = 0;
+    final int TOTAL_EXPANSES_POSITION = 1;
     private void displayExpansesByCategory(){
         int[][] expansesByCategory = getExpansesByCategory();
 
         //Print the expanses by category
-        for (String category : CATEGORIES) {
-            System.out.printf("The expanses for %s are: %d\n", category, expansesByCategory[0][1]);
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            System.out.printf("The expanses for %s are: %d\n", CATEGORIES[i], expansesByCategory[CATEGORY_EXPANSES_POSITION][i]);
         }
-        System.out.printf("The expanses for all categories are: %d%%\n", expansesByCategory[1][0]);
+        System.out.printf("The total expanses for all categories are: %d\n", expansesByCategory[TOTAL_EXPANSES_POSITION][0]);
     }
 
     private void displayRelativeExpansesByCategory(){
         int[][] expansesByCategory = getExpansesByCategory();
 
         //Print the relative expanses by category
-        for (String category : CATEGORIES) {
-            System.out.printf("The relative expanses for %s are: %d\n", category, expansesByCategory[0][1]);
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            System.out.printf("The relative expanses for %s are: %d%%\n",  CATEGORIES[i], expansesByCategory[CATEGORY_EXPANSES_POSITION][i] * 100 / budget);
         }
-        System.out.printf("The relative expanses for all categories are: %d%%\n", expansesByCategory[1][0] * 100 / budget);
+        System.out.printf("The relative expanses for all categories are: %d%%\n", expansesByCategory[TOTAL_EXPANSES_POSITION][0] * 100 / budget);
     }
 
     private void displayDayWithHighestExpanse(){
@@ -109,7 +111,7 @@ public class ExpanseOutputService {
             }
             if (expansePerDay > highestExpanses){
                 highestExpanses = expansePerDay;
-                dayWithHighestExpense = i;
+                dayWithHighestExpense = i+1;
             }
         }
 
