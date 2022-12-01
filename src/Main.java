@@ -6,6 +6,7 @@ public class Main {
     final private static  String[] CATEGORIES = {"Food", "Transport", "Shopping", "Other"};
 
     private static String name;
+    private static int days;
     private static int[][] expanses;
     private static int budget;
 
@@ -22,9 +23,10 @@ public class Main {
     public static void main(String[] args) {
         //Greet the User and save his/her name
         System.out.println("Welcome to the expanses program!");
-        name = getStringFromUserWithMessage("What is your name?");
+        name = getStringFromUserWithMessage("What is your name? \n");
 
         // Ask the user for the budget and expanses
+        days = getDaysToTrack();
         budget = getBudget();
         expanses = getExpanses();
 
@@ -38,82 +40,22 @@ public class Main {
 
         //Exit the program
         System.out.printf("It was a pleasure to help you %s!", name);
-
-
-
-
     }
 
-    // Helper methods for input validation
-    public static int validateInputIsInt(String message) {
-        String input;
-        int tries = 0;
-        do{
-            //Get a String Input from the user
-            input = getStringFromUserWithMessage(message);
-
-            //To assert the input is an Integer, try to parse it to an Integer
-            //If so, return the Integer
-            //If not, print an error message and ask for input again
-            try {
-                return Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Input is not a number");
-            }
-            tries++;
-        }while (tries < 3);
-        System.out.println("You have entered an invalid input 3 times. Exiting the program");
-        System.exit(1);
-        return -1;
-    }
-
-    public static int validateInputIsInRange(String message, int min, int max) {
-        String input;
-        int tries = 0;
-        do{
-            //Get a String Input from the user
-            input = getStringFromUserWithMessage(message);
-            String regexString = "[" + min + "-" + max + "]";
-            //Check if the input is a number and in the range
-            if (!input.matches("^[0-9]+$")) {
-                System.out.println("Input is not a number, please enter a number between " + min + " and " + max);
-            } else if (!input.matches(regexString)) {
-                System.out.println("Input is not in range, please enter a number between " + min + " and " + max);
-            } else {
-                return Integer.parseInt(input);
-            }
-            tries++;
-        }while (tries < 3);
-
-        System.out.println("You have entered an invalid input 3 times. Exiting the program");
-        System.exit(1);
-        return -1;
-    }
-
-    public static String getStringFromUserWithMessage(String message) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(message);
-        return scanner.nextLine();
-    }
-
-    private static void waitForKeypress(){
-        //Wait for the user to press a key
-        System.out.println("\nPress 'Enter' to continue...");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-    }
-
-    // Methods to get the budget and expanses from the user
-    public static int[][] getExpanses() {
+    // Methods to get the days, budget and expanses from the user
+    private static int getDaysToTrack() {
         //Get the number of days from the user
-        int days = validateInputIsInt(name + ", please enter the number of days you want to enter expanses for");
-
+        return validateInputIsInt(name + ", for how many days do you want to track your expanses?");
+    }
+    public static int[][] getExpanses() {
         //Initialize the expanses array with the number of inserted days
         int[][] expanses = new int[days][CATEGORIES.length];
+        System.out.printf("%s, please enter the expanses for each day and category", name);
         for (int i = 0; i < days; i++) {
             //For each day, ask the user for the expanses for each category
+            System.out.println("Day " + (i + 1));
             for (int j = 0; j < CATEGORIES.length; j++) {
-                expanses[i][j] = validateInputIsInt(name +" enter expanses for " + CATEGORIES[j] + " for day " + (i + 1));
+                expanses[i][j] = validateInputIsInt(CATEGORIES[j]+": ");
             }
         }
         return expanses;
@@ -121,7 +63,7 @@ public class Main {
 
     public static int getBudget() {
         //Get the budget from the user
-        return validateInputIsInt("Please enter your budget "+ name);
+        return validateInputIsInt(name + ", what was your budget for the "+ days +" days");
     }
 
     // Methods to create and
@@ -134,7 +76,7 @@ public class Main {
                 System.out.printf("[%d] -> %s\n", i, menuItems.get(i));
             }
             //Get the user input
-            selectedItem = validateInputIsInRange("Please select one of the options", 0, menuItems.size() - 1);
+            selectedItem = validateInputIsInRange("Please select one of the menu-options", 0, menuItems.size() - 1);
 
             //Execute the selected action and if it's the exit action, break the loop and exit the program
             switch (selectedItem) {
@@ -235,7 +177,6 @@ public class Main {
                 dayWithHighestExpense = i+1;
             }
         }
-
         System.out.printf("The highest total expanse was %d€ on day number %d\n", highestExpanses, dayWithHighestExpense);
     }
 
@@ -252,10 +193,67 @@ public class Main {
                 categoryWithLowestSum = i;
             }
         }
-
         System.out.printf("The category with the lowest expanses is: %s, with a total expense of %d€ \n", CATEGORIES[categoryWithLowestSum], lowestExpanse);
     }
 
+    // Helper methods for input validation
+    public static int validateInputIsInt(String message) {
+        String input;
+        int tries = 0;
+        do{
+            //Get a String Input from the user
+            input = getStringFromUserWithMessage(message);
+
+            //To assert the input is an Integer, try to parse it to an Integer
+            //If so, return the Integer
+            //If not, print an error message and ask for input again
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Input is not a number");
+            }
+            tries++;
+        }while (tries < 3);
+        System.out.println("You have entered an invalid input 3 times. Exiting the program");
+        System.exit(1);
+        return -1;
+    }
+
+    public static int validateInputIsInRange(String message, int min, int max) {
+        String input;
+        int tries = 0;
+        do{
+            //Get a String Input from the user
+            input = getStringFromUserWithMessage(message);
+            String regexString = "[" + min + "-" + max + "]";
+            //Check if the input is a number and in the range
+            if (!input.matches("^[0-9]+$")) {
+                System.out.println("Input is not a number, please enter a number between " + min + " and " + max);
+            } else if (!input.matches(regexString)) {
+                System.out.println("Input is not in range, please enter a number between " + min + " and " + max);
+            } else {
+                return Integer.parseInt(input);
+            }
+            tries++;
+        }while (tries < 3);
+
+        System.out.println("You have entered an invalid input 3 times. Exiting the program");
+        System.exit(1);
+        return -1;
+    }
+
+    public static String getStringFromUserWithMessage(String message) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(message);
+        return scanner.nextLine();
+    }
+
+    private static void waitForKeypress(){
+        //Wait for the user to press a key
+        System.out.println("\nPress 'Enter' to continue...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
 
 
 
