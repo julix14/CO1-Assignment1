@@ -33,7 +33,7 @@ public class Main {
         //Always be nice to the user :)
         System.out.printf(
                 "Thanks for your input %s!\n" +
-                "Enjoy the Options to analyse your expanses!", name);
+                "Enjoy the following Options to analyse your expanses!\n", name);
 
         //Start the menu
         selectAction();
@@ -45,12 +45,17 @@ public class Main {
     // Methods to get the days, budget and expanses from the user
     private static int getDaysToTrack() {
         //Get the number of days from the user
-        return validateInputIsInt(name + ", for how many days do you want to track your expanses?");
+        return validateInputIsInt(name + ", for how many days do you want to track your expanses? ");
+    }
+
+    public static int getBudget() {
+        //Get the budget from the user
+        return validateInputIsInt(name + ", what was your budget for the "+ days +" days? ");
     }
     public static int[][] getExpanses() {
         //Initialize the expanses array with the number of inserted days
         int[][] expanses = new int[days][CATEGORIES.length];
-        System.out.printf("%s, please enter the expanses for each day and category", name);
+        System.out.printf("%s, please enter the expanses for each day and category%n", name);
         for (int i = 0; i < days; i++) {
             //For each day, ask the user for the expanses for each category
             System.out.println("Day " + (i + 1));
@@ -61,22 +66,17 @@ public class Main {
         return expanses;
     }
 
-    public static int getBudget() {
-        //Get the budget from the user
-        return validateInputIsInt(name + ", what was your budget for the "+ days +" days");
-    }
-
-    // Methods to create and
+    // Methods to create and display the menu
     public static void selectAction() {
         int selectedItem;
         do {
             //Print the Menu Items
-            System.out.println("Menu-Items: \n");
+            System.out.println("\nMenu-Items: ");
             for (int i = 0; i < menuItems.size(); i++) {
                 System.out.printf("[%d] -> %s\n", i, menuItems.get(i));
             }
             //Get the user input
-            selectedItem = validateInputIsInRange("Please select one of the menu-options", 0, menuItems.size() - 1);
+            selectedItem = validateInputIsInRange("Please select one of the menu-options\n", 0, menuItems.size() - 1);
 
             //Execute the selected action and if it's the exit action, break the loop and exit the program
             switch (selectedItem) {
@@ -87,7 +87,6 @@ public class Main {
                 case 4 -> displayDayWithHighestExpanse();
                 case 5 -> displayCategoryWithLowestExpanses();
             }
-            waitForKeypress();
         } while (selectedItem != 6);
     }
 
@@ -115,10 +114,16 @@ public class Main {
                 totalExpanses += expanse;
             }
         }
+        if (totalExpanses > budget) {
+            //Print the remaining budget
+            System.out.printf("You exceeded your budget by: %d€\n",  totalExpanses - budget);
+            System.out.printf("Or to say it in percentage: %d%%\n", (totalExpanses - budget) * 100 / budget);
+        } else {
+            //Print the remaining budget
+            System.out.printf("The remaining budget is: %d€\n", budget - totalExpanses);
+            System.out.printf("Or to say it in percentage: %d%%\n", (budget - totalExpanses) * 100 / budget);
+        }
 
-        //Print the remaining budget
-        System.out.printf("The remaining budget is: %d€\n", budget - totalExpanses);
-        System.out.printf("Or to say it in percentage: %d%%\n", (budget - totalExpanses) * 100 / budget);
 
     }
 
@@ -156,9 +161,8 @@ public class Main {
 
         //Print the relative expanses by category
         for (int i = 0; i < CATEGORIES.length; i++) {
-            System.out.printf("The relative expanses for %s are: %d%%\n",  CATEGORIES[i], expansesByCategory[CATEGORY_EXPANSES_POSITION][i] * 100 / budget);
+            System.out.printf("The relative expanses for %s are: %d%%\n",  CATEGORIES[i], expansesByCategory[CATEGORY_EXPANSES_POSITION][i] * 100 / expansesByCategory[TOTAL_EXPANSES_POSITION][0]);
         }
-        System.out.printf("The relative expanses for all categories are: %d%% from your budget\n", expansesByCategory[TOTAL_EXPANSES_POSITION][0] * 100 / budget);
     }
 
     private static void displayDayWithHighestExpanse(){
@@ -247,15 +251,4 @@ public class Main {
         System.out.print(message);
         return scanner.nextLine();
     }
-
-    private static void waitForKeypress(){
-        //Wait for the user to press a key
-        System.out.println("\nPress 'Enter' to continue...");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-    }
-
-
-
-
 }
