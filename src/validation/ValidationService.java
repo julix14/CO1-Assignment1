@@ -7,6 +7,7 @@ public class ValidationService {
 
     public int validateInputIsInt(String message) {
         String input;
+        int tries = 0;
         do{
             //Get a String Input from the user
             input = userInputService.getStringFromUserWithMessage(message);
@@ -19,11 +20,16 @@ public class ValidationService {
             } catch (NumberFormatException e) {
                 System.out.println("Input is not a number");
             }
-        }while (true);
+            tries++;
+        }while (tries < 3);
+        System.out.println("You have entered an invalid input 3 times. Exiting the program");
+        System.exit(1);
+        return -1;
     }
 
     public int validateInputIsInRange(String message, int min, int max) {
         String input;
+        int tries = 0;
         do{
             //Get a String Input from the user
             input = userInputService.getStringFromUserWithMessage(message);
@@ -36,7 +42,12 @@ public class ValidationService {
             } else {
                 return Integer.parseInt(input);
             }
-        }while (true);
+           tries++;
+        }while (tries < 3);
+
+        System.out.println("You have entered an invalid input 3 times. Exiting the program");
+        System.exit(1);
+        return -1;
     }
 
 }
