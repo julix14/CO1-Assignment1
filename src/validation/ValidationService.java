@@ -5,7 +5,7 @@ import input.UserInputService;
 public class ValidationService {
     private final UserInputService userInputService = new UserInputService();
 
-    public Integer validateInputIsInt(String message) {
+    public int validateInputIsInt(String message) {
         String input;
         do{
             //Get a String Input from the user
@@ -22,8 +22,8 @@ public class ValidationService {
         }while (true);
     }
 
-    public Integer validateInputIsInRange(String message, Integer min, Integer max) {
-        Integer input;
+    public int validateInputIsInRange(String message, int min, int max) {
+        int input;
         do {
             //Get an Integer Input from the user
             input = validateInputIsInt(message);
