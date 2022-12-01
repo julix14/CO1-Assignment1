@@ -1,13 +1,18 @@
 import java.util.Scanner;
 
 public class Main {
-    final public static String[] CATEGORIES = {"Food", "Transport", "Shopping", "Other"};
+    //Constants
+    final static String[] CATEGORIES = {"Food", "Transport", "Shopping", "Other"};
+    static final int CATEGORY_EXPANSES_POSITION = 0;
+    static final int TOTAL_EXPANSES_POSITION = 1;
 
-    public static String name;
-    public static int days;
-    public static int[][] expanses;
-    public static int budget;
+    //Attributes
+    static String name;
+    static int days;
+    static int[][] expanses;
+    static int budget;
 
+    //Objects
     public static Scanner scanner = new Scanner(System.in);
 
     public static final String[] menuItems = {
@@ -133,26 +138,6 @@ public class Main {
 
     }
 
-    public static int[][] getExpansesByCategory() {
-        //Create an array to store the expanses by category
-        int[] categoryExpanses = new int[CATEGORIES.length];
-        int totalExpanses = 0;
-
-        //Go through each day and each category and store the value in the categoryExpanses array
-        //Also sum up the total expanses
-        for (int[] day : expanses) {
-            for (int i = 0; i < day.length; i++) {
-                categoryExpanses[i] += day[i];
-                totalExpanses += day[i];
-            }
-        }
-
-        //return the categoryExpanses array and the total expanses in a 2D array
-        return new int[][]{categoryExpanses, {totalExpanses}};
-    }
-    static final int CATEGORY_EXPANSES_POSITION = 0;
-    static final int TOTAL_EXPANSES_POSITION = 1;
-
     public static void displayExpansesByCategory() {
         int[][] expansesByCategory = getExpansesByCategory();
 
@@ -207,9 +192,8 @@ public class Main {
         System.out.printf("The category with the lowest expanses is: %s, with a total expense of %d€ \n", CATEGORIES[categoryWithLowestSum], lowestExpanse);
     }
 
-    // Helper methods for input
+    // Helper methods
     public static String getStringFromUserWithMessage(String message) {
-        Scanner scanner = new Scanner(System.in);
         System.out.print(message);
         return scanner.nextLine();
     }
@@ -217,7 +201,25 @@ public class Main {
     public static void waitForKeypress() {
         //Wait for the user to press a key
         System.out.println("\nPress 'Enter' to continue...");
-        Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
+
+    public static int[][] getExpansesByCategory() {
+        //Create an array to store the expanses by category
+        int[] categoryExpanses = new int[CATEGORIES.length];
+        int totalExpanses = 0;
+
+        //Go through each day and each category and store the value in the categoryExpanses array
+        //Also sum up the total expanses
+        for (int[] day : expanses) {
+            for (int i = 0; i < day.length; i++) {
+                categoryExpanses[i] += day[i];
+                totalExpanses += day[i];
+            }
+        }
+
+        //return the categoryExpanses array and the total expanses in a 2D array
+        return new int[][]{categoryExpanses, {totalExpanses}};
+    }
+
 }
