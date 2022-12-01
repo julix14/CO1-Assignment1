@@ -23,18 +23,18 @@ public class ValidationService {
     }
 
     public int validateInputIsInRange(String message, int min, int max) {
-        int input;
-        do {
-            //Get an Integer Input from the user
-            input = validateInputIsInt(message);
-
-            //To assert the input is in range, check if it is bigger than the minimum and smaller than the maximum
-            //If the input is in the given range, return it
-            //If not, print an error message and ask for input again
-            if (input >= min && input <= max) {
-                return input;
+        String input;
+        do{
+            //Get a String Input from the user
+            input = userInputService.getStringFromUserWithMessage(message);
+            String regexString = "[" + min + "-" + max + "]";
+            //Check if the input is a number and in the range
+            if (!input.matches("^[0-9]+$")) {
+                System.out.println("Input is not a number, please enter a number between " + min + " and " + max);
+            } else if (!input.matches(regexString)) {
+                System.out.println("Input is not in range, please enter a number between " + min + " and " + max);
             } else {
-                System.out.println("Input is not in range");
+                return Integer.parseInt(input);
             }
         }while (true);
     }
